@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/sayhello" method="post" id="form">
+        <div>
+            <label for="name">name</label>
+            <input type="text" id="name" name="name">
+        </div>
+
+        <button type="submit">Kirim Data</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $("#form").on("submit", function(e){
+                e.preventDefault()
+
+                const self = $(this)
+
+                const formData = {
+                    name: self.find('[name="name"]').val()
+                }
+
+                const url = self.attr("action")
+                const method = self.attr("method")
+
+                const payload = JSON.stringify(formData)
+
+                $.ajax({
+                    url:url,
+                    method:method,
+                    contentType:"application/json",
+                    data:payload,
+                }).then((res)=>{
+                    console.log({res})
+                }).catch((err)=>{
+                    console.log(err.message)
+                })
+
+            })
+        })
+    </script>
+</body>
+</html>
